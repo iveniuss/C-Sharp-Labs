@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace Lab4
 {
-    internal class Program
+    internal static class Program
     {
+        private static readonly Random R = new Random(0);
         public static void Main(string[] args)
         {
             int n;
+            bool isSorted = false;
+            bool isCreated = false;
+            bool exit = false;
             int EnterNumber()
             {
                 int number;
@@ -23,7 +26,7 @@ namespace Lab4
 
             int[] FillArray(int k)
             {
-                int[] arr = new int[k]; 
+                int[] a = new int[k]; 
                 Console.WriteLine("Введите цифру для выбора способа заполнения массива\n" +
                                   "1 - С помощью датчика случаных чисел\n" +
                                   "2 - Ввод с клавиатуры");
@@ -32,10 +35,10 @@ namespace Lab4
                     switch (EnterNumber())
                     {
                         case 1:
-                            Random r = new Random(0);
+                            
                             for (int i = 0; i < k; i++)
                             {
-                                arr[i] = r.Next(-100, 100);
+                                a[i] = R.Next(-100, 100);
                             }
 
                             isGenerated = true;
@@ -45,7 +48,7 @@ namespace Lab4
                             for (int i = 0; i < k; i++)
                             {
                                 Console.WriteLine("Введите целое число");
-                                arr[i] = EnterNumber();
+                                a[i] = EnterNumber();
                             }
 
                             isGenerated = true;
@@ -57,209 +60,346 @@ namespace Lab4
                     }
                 }
 
-                return arr;
+                return a;
             }
 
-            void PrintArray(int[] arr)
+            void PrintArray(int[] a)
             {
+                Console.WriteLine("--------------------Печать массива--------------------");
                 Console.Write("Массив: ");
                 for (int i = 0; i < n; i++)
                 {
-                    Console.Write($"{arr[i]} ");
+                    Console.Write($"{a[i]} ");
                 }
 
                 Console.Write('\n');
             }
-            
-            
-            Console.WriteLine("Введите количество элементов массива");
-            do
-            {
-                n = EnterNumber();
-                if (n<1)
-                    Console.WriteLine("Количество элментов должно быть больше 0");
-            } while (n < 1);
 
-            int[] a = FillArray(n);
-
-            Console.WriteLine("--------------------Печать массива--------------------");
-            
-            PrintArray(a);
-            
-            Console.WriteLine("------------------Удаление элементов------------------");
-            
-            Console.WriteLine("Введите номер числа, которое хотите удалить: ");
-            int index;
-            do
+            int[] CreateArray()
             {
-                index = EnterNumber() - 1;
-                if (index < 0 || index>=n)
-                    Console.WriteLine($"Номер элемента должен быть от 1 до {n}");
-            } while (index < 0 || index>=n);
-            Console.WriteLine(a[index]);
-            int[] tempA = new int[n-1];
-            int s = 0;
-            for (int i = 0; i < n; i++)
-            {
-                if (i != index)
-                    tempA[i - s] = a[i];
-                else
-                    s++;
+                Console.WriteLine("Введите количество элементов массива");
+                do
+                {
+                    n = EnterNumber();
+                    if (n < 1)
+                        Console.WriteLine("Количество элментов должно быть больше 0");
+                } while (n < 1);
+                
+                return FillArray(n);
             }
-            n--;
-            a = tempA;
-            PrintArray(a);
 
-            Console.WriteLine("-----------------Добавление элементов-----------------");
-
-            Console.WriteLine("Введите с какого номера начать добавлять элементы: ");
-            int startIndex,num;
-            do
+            int[] DeleteElements(int[] a)
             {
-                startIndex = EnterNumber() - 1;
-                if (startIndex < 0 || startIndex >= n)
-                    Console.WriteLine($"Номер элемента должен быть от 1 до {n}");
-            } while (startIndex < 0|| startIndex>=n);
 
-            Console.WriteLine("Введите сколько элементов добавить: ");
-            do
-            {
-                num = EnterNumber();
-                if(num < 0)
-                    Console.WriteLine("Нельзя добавить отрицательное число элементов");
-            } while (num < 0);
+                Console.WriteLine("------------------Удаление элементов------------------");
+                if (n != 0)
+                {
+                    Console.WriteLine("Введите номер числа, которое хотите удалить: ");
+                    int index;
+                    do
+                    {
+                        index = EnterNumber() - 1;
+                        if (index < 0 || index >= n)
+                            Console.WriteLine($"Номер элемента должен быть от 1 до {n}");
+                    } while (index < 0 || index >= n);
 
-            if (num != 0)
+                    Console.WriteLine(a[index]);
+                    int[] tempA = new int[n - 1];
+                    int s = 0;
+                    for (int i = 0; i < n; i++)
+                    {
+                        if (i != index)
+                            tempA[i - s] = a[i];
+                        else
+                            s++;
+                    }
+                    Console.WriteLine("Элементы удалены");
+                    n--;
+                    return tempA;
+                }
+                Console.WriteLine("Массив пустой");
+                isCreated = false;
+                return a;
+            }
+
+            int[] AddElements(int[] a)
             {
-                n += num;
-                tempA = new int[n];
-                s = 0;
+                Console.WriteLine("-----------------Добавление элементов-----------------");
+
+                Console.WriteLine("Введите с какого номера начать добавлять элементы: ");
+                int startIndex, num;
+                do
+                {
+                    startIndex = EnterNumber() - 1;
+                    if (startIndex < 0 || startIndex >= n+1)
+                        Console.WriteLine($"Номер элемента должен быть от 1 до {n}");
+                } while (startIndex < 0 || startIndex >= n+1);
+
+                Console.WriteLine("Введите сколько элементов добавить: ");
+                do
+                {
+                    num = EnterNumber();
+                    if (num < 0)
+                        Console.WriteLine("Нельзя добавить отрицательное число элементов");
+                } while (num < 0);
+
+                if (num != 0)
+                {
+                    if (startIndex == n + 1)
+                        n += num + 1;
+                    else
+                        n += num;
+                    int[] tempA = new int[n];
+                    int s = 0;
+                    for (int i = 0; i < n; i++)
+                    {
+                        if (i >= startIndex && i < startIndex + num)
+                        {
+                            tempA[i] = 0;
+                            s++;
+                        }
+                        else
+                        {
+                            tempA[i] = a[i - s];
+                        }
+                    }
+
+                    int[] tempB = FillArray(num);
+                    for (int i = startIndex; i < startIndex + num; i++)
+                    {
+                        tempA[i] = tempB[i - startIndex];
+                    }
+
+                    return tempA;
+                }
+                else
+                {
+                    Console.WriteLine("Числа добавлены не были");
+                    return a;
+                }
+
+            }
+
+            int[] Shift(int[] a)
+            {
+                Console.WriteLine("---------------------Перестановка---------------------");
+
+                Console.WriteLine($"Введите на сколько элементов влево сдвинуть массив: ");
+                int shift;
+                do
+                {
+                    shift = EnterNumber();
+                    if (shift < 0 || shift > n)
+                        Console.WriteLine($"Смещение должно быть от 0 до {n}");
+                } while (shift < 0 || shift > n);
+
+                if (shift != 0 && shift != n)
+                {
+
+                    int[] tempA = new int[shift];
+
+                    for (int i = 0; i < shift; i++)
+                        tempA[i] = a[i];
+
+                    for (int i = 0; i < n - shift; i++)
+                        a[i] = a[i + shift];
+                    for (int i = 0; i < shift; i++)
+                        a[n - shift + i] = tempA[i];
+
+                }
+                else
+                    Console.WriteLine("Элементы переставленны не были");
+
+                return a;
+            }
+
+            void Find(int[] a)
+            {
+
+                Console.WriteLine("------------------------Поиск-------------------------");
+
+                Console.WriteLine("Введите значение искомого элемента: ");
+                int obj = EnterNumber();
+                bool isFind = false;
+                int index=0;
                 for (int i = 0; i < n; i++)
                 {
-                    if (i >= startIndex && i < startIndex + num)
+                    if (a[i] == obj)
                     {
-                        tempA[i] = 0;
-                        s++;
+                        index = i;
+                        isFind = true;
+                        break;
+                    }
+                }
+
+                Console.WriteLine(isFind
+                    ? $"Искомый элемент находится под номером {index + 1}\n" +
+                      $"Число проверок - {index + 1}"
+                    : "Такого элемента в массиве нет");
+            }
+
+            int[] Sort(int[] a)
+            {
+                Console.WriteLine("----------------------Сортировка----------------------");
+
+                for (int i = 1; i < n; i++)
+                {
+                    int j = i - 1;
+                    int key = a[i];
+                    while (j >= 0 && a[j] > key)
+                    {
+                        a[j + 1] = a[j];
+                        j--;
+                    }
+
+                    a[j + 1] = key;
+                }
+
+                isSorted = true;
+                return a;
+            }
+
+            void BinFind(int[] a)
+            {
+
+                Console.WriteLine("--------------------Бинарный поиск--------------------");
+
+                Console.WriteLine("Введите значние искомого элемента: ");
+                int obj = EnterNumber();
+                int start = 0;
+                int end = n - 1;
+                int c = 0;
+                bool isFind = false;
+                int index = 0;
+                while (start <= end && !isFind)
+                {
+                    int center = (start + end) / 2;
+                    if (a[center] > obj)
+                    {
+                        end = --center;
+                        c++;
+                    }
+                    else if (a[center] < obj)
+                    {
+                        start = ++center;
+                        c++;
                     }
                     else
                     {
-                        tempA[i] = a[i - s];
+                        index = center;
+                        c++;
+                        isFind = true;
                     }
+
                 }
 
-                int[] tempB = FillArray(num);
-                for (int i = startIndex; i < startIndex + num; i++)
-                {
-                    tempA[i] = tempB[i - startIndex];
-                }
-
-                a = tempA;
-            }
-            else
-                Console.WriteLine("Числа добавлены не были");
-            
-            PrintArray(a);
-
-            Console.WriteLine("---------------------Перестановка---------------------");
-            
-            Console.WriteLine($"Введите на сколько элементов влево сдвинуть массив: ");
-            int shift;
-            do
-            {
-                shift = EnterNumber();
-                if (shift < 0 || shift > n)
-                    Console.WriteLine($"Смещение должно быть от 0 до {n}");
-            } while (shift < 0|| shift>n);
-
-            if (shift != 0 && shift!=n)
-            {
-
-                tempA = new int[shift];
-
-                for (int i = 0; i < shift; i++)
-                    tempA[i] = a[i];
-
-                for (int i = 0; i < n - shift; i++)
-                    a[i] = a[i + shift];
-                for (int i = 0; i < shift; i++)
-                    a[n - shift + i] = tempA[i];
-
-            }
-            else
-                Console.WriteLine("Элементы переставленны не были");
-            PrintArray(a);
-
-            Console.WriteLine("------------------------Поиск-------------------------");
-            
-            Console.WriteLine("Введите значение искомого элемента: ");
-            int obj = EnterNumber();
-            bool isFind = false;
-            for (int i = 0; i < n; i++)
-            {
-                if (a[i] == obj)
-                {
-                    index = i;
-                    isFind = true;
-                    break;
-                }
+                Console.WriteLine(isFind
+                    ? $"Искомый элемент находится под номером {index+1}\n" +
+                      $"Количество сравнений - {c}"
+                    : "Такого элемента в массиве нет");
             }
 
-            Console.WriteLine(isFind
-                ? $"Искомый элемент находится под номером {index + 1}\n" +
-                  $"Число проверок - {index+1}"
-                : "Такого элемента в массиве нет");
-
-            Console.WriteLine("----------------------Сортировка----------------------");
-
-            for (int i = 1; i < n; i++)
-            {
-                int j = i - 1;
-                int key = a[i];
-                while (j >= 0 && a[j] > key)
-                {
-                    a[j + 1] = a[j];
-                    j--;
-                }
-
-                a[j + 1] = key;
-            }
             
-            PrintArray(a);
-            
-            Console.WriteLine("--------------------Бинарный поиск--------------------");
-
-            Console.WriteLine("Введите значние искомого элемента: ");
-            obj = EnterNumber();
-            int start = 0;
-            int end = n - 1;
-            int c = 0;
-            isFind = false;
-            while (start <= end && !isFind)
+            int[] arr=new int[0];
+            n = 0;
+            while (!exit)
             {
-                int center = (start + end) / 2;
-                if (a[center] > obj)
+                Console.WriteLine("------------------------------------------------------\n" +
+                                  "Выберите действие\n" +
+                                  "1 - Создание массива\n" +
+                                  "2 - Печать массива\n" +
+                                  "3 - Удаление элементов\n" +
+                                  "4 - Добавление элементов\n" +
+                                  "5 - Перестановка\n" +
+                                  "6 - Поиск\n" +
+                                  "7 - Сортировка\n" +
+                                  "8 - Бинарный поиск\n" +
+                                  "9 - Выход");
+                switch (EnterNumber())
                 {
-                    end = --center;
-                    c++;
+                    case 1:
+                        arr = CreateArray();
+                        Console.WriteLine("Новый массив создан");
+                        isCreated = true;
+                        isSorted = false;
+                        break;
+                    case 2:
+                        if (isCreated)
+                            PrintArray(arr);
+                        else
+                            Console.WriteLine("Массив еще не создан");
+                        break;
+                    case 3:
+                    {
+                        if (isCreated)
+                        {
+                            arr = DeleteElements(arr);
+                            
+                        }
+                        else
+                            Console.WriteLine("Массив еще не создан");
+                        break;
+                    }
+                    case 4:
+                    {
+                        if (isCreated)
+                        {
+                            arr = AddElements(arr);
+                            isSorted = false;
+                            Console.WriteLine("Элементы добавлены");
+                        }
+                        else
+                            Console.WriteLine("Массив еще не создан");
+                        break;
+                    }
+                    case 5:
+                        if (isCreated)
+                        {
+                            arr = Shift(arr);
+                            Console.WriteLine("Элементы переставлены");
+                            isSorted = false;
+                        }
+                        else
+                            Console.WriteLine("Массив еще не создан");
+                        break;
+                    case 6:
+                        if (isCreated)
+                            Find(arr);
+                        else
+                            Console.WriteLine("Массив еще не создан");
+                        break;
+                    case 7:
+                        if (isCreated)
+                        {
+                            arr = Sort(arr);
+                            isSorted = true;
+                            Console.WriteLine("Массив отсортирован");
+                        }
+                        else
+                            Console.WriteLine("Массив еще не создан");
+                        break;
+                    case 8:
+                        switch (isCreated)
+                        {
+                            case true when isSorted:
+                                BinFind(arr);
+                                break;
+                            case true:
+                                Console.WriteLine("Массив не отсортирован");
+                                break;
+                            default:
+                                Console.WriteLine("Массив еще не создан");
+                                break;
+                        }
+                        break;
+                    case 9:
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Такого числа нет в списке");
+                        break;
                 }
-                else if (a[center] < obj)
-                {
-                    start = ++center;
-                    c++;
-                }
-                else
-                {
-                    index = center;
-                    c++;
-                    isFind = true;
-                }
-
             }
-
-            Console.WriteLine(isFind
-                ? $"Искомый элемент находится под номером {index}\n" +
-                  $"Количество сравнений - {c}"
-                : "Такого элемента в массиве нет");
         }
         
     }
