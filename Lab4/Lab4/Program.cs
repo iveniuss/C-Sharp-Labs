@@ -30,8 +30,8 @@ namespace Lab4
                 Console.WriteLine("Введите цифру для выбора способа заполнения массива\n" +
                                   "1 - С помощью датчика случаных чисел\n" +
                                   "2 - Ввод с клавиатуры");
-                bool isGenerated = false;
-                while(!isGenerated){
+                isCreated = false;
+                while(!isCreated){
                     switch (EnterNumber())
                     {
                         case 1:
@@ -41,7 +41,7 @@ namespace Lab4
                                 a[i] = R.Next(-100, 100);
                             }
 
-                            isGenerated = true;
+                            isCreated = true;
 
                             break;
                         case 2:
@@ -51,7 +51,7 @@ namespace Lab4
                                 a[i] = EnterNumber();
                             }
 
-                            isGenerated = true;
+                            isCreated = true;
 
                             break;
                         default:
@@ -172,11 +172,9 @@ namespace Lab4
 
                     return tempA;
                 }
-                else
-                {
-                    Console.WriteLine("Числа добавлены не были");
-                    return a;
-                }
+                Console.WriteLine("Числа добавлены не были");
+                return a;
+
 
             }
 
