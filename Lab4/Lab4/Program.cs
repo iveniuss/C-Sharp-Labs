@@ -82,7 +82,7 @@ namespace Lab4
                 {
                     n = EnterNumber();
                     if (n < 1)
-                        Console.WriteLine("Количество элментов должно быть больше 0");
+                        Console.WriteLine("Количество элементов должно быть больше 0");
                 } while (n < 1);
                 
                 return FillArray(n);
@@ -114,7 +114,8 @@ namespace Lab4
                             s++;
                     }
                     Console.WriteLine("Элементы удалены");
-                    n--;
+                    if (--n == 0)
+                        isCreated = false;
                     return tempA;
                 }
                 Console.WriteLine("Массив пустой");
@@ -132,7 +133,7 @@ namespace Lab4
                 {
                     startIndex = EnterNumber() - 1;
                     if (startIndex < 0 || startIndex >= n+1)
-                        Console.WriteLine($"Номер элемента должен быть от 1 до {n}");
+                        Console.WriteLine($"Номер элемента должен быть от 1 до {n+1}");
                 } while (startIndex < 0 || startIndex >= n+1);
 
                 Console.WriteLine("Введите сколько элементов добавить: ");
@@ -169,7 +170,7 @@ namespace Lab4
                     {
                         tempA[i] = tempB[i - startIndex];
                     }
-
+                    Console.WriteLine("Элементы добавлены");
                     return tempA;
                 }
                 Console.WriteLine("Числа добавлены не были");
@@ -203,6 +204,7 @@ namespace Lab4
                         a[i] = a[i + shift];
                     for (int i = 0; i < shift; i++)
                         a[n - shift + i] = tempA[i];
+                    Console.WriteLine("Элементы переставлены");
 
                 }
                 else
@@ -344,7 +346,6 @@ namespace Lab4
                         {
                             arr = AddElements(arr);
                             isSorted = false;
-                            Console.WriteLine("Элементы добавлены");
                         }
                         else
                             Console.WriteLine("Массив еще не создан");
@@ -354,7 +355,6 @@ namespace Lab4
                         if (isCreated)
                         {
                             arr = Shift(arr);
-                            Console.WriteLine("Элементы переставлены");
                             isSorted = false;
                         }
                         else
@@ -383,7 +383,7 @@ namespace Lab4
                                 BinFind(arr);
                                 break;
                             case true:
-                                Console.WriteLine("Массив не отсортирован");
+                                Console.WriteLine("Сначала отсортируйте массив");
                                 break;
                             default:
                                 Console.WriteLine("Массив еще не создан");
