@@ -6,11 +6,12 @@ namespace Lab5
     internal class Program
     {
         private static readonly Random R = new Random(0);
-        private const int LowerBound = -99;
-        private const int UpperBound = 100;
+        private const int LowerBound = -3;
+        private const int UpperBound = 5;
         private const int NumLen = 3;
+        private const int DividerLength = 54;
 
-        static int EnterNumber(int lowerBound = -2147483648, int upperBound = 2147483647)
+        static int EnterNumber(int lowerBound = int.MinValue, int upperBound = int.MaxValue)
         {
             int number;
             bool isParse;
@@ -27,7 +28,13 @@ namespace Lab5
 
         static void WriteDividerLine(string name = "")
         {
-            string halfLine = new string('-',(54-name.Length)/2);
+            int lineLength;
+            if (name.Length > DividerLength)
+                lineLength = 0;
+            else
+                lineLength = (DividerLength - name.Length) / 2;
+
+            string halfLine = new string('-',lineLength);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(halfLine+name+halfLine);
             Console.ResetColor();
@@ -49,7 +56,7 @@ namespace Lab5
                               "2 - Ввод с клавиатуры");
             while (!isChosen)
             {
-                switch (EnterNumber())
+                switch (EnterNumber(1,2))
                 {
                     case 1:
                         isRandom = true;
@@ -57,9 +64,6 @@ namespace Lab5
                         break;
                     case 2:
                         isChosen = true;
-                        break;
-                    default:
-                        Console.WriteLine("Введите 1 или 2");
                         break;
                 }
             }
@@ -81,6 +85,25 @@ namespace Lab5
                 }
 
             return newArr;
+        }
+
+        static int Find(int[] arr, out bool isFind)
+        {
+            int obj = EnterNumber();
+            isFind = false;
+            int index = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == obj)
+                {
+                    index = i;
+                    isFind = true;
+                    break;
+                }
+            }
+
+            return index;
+
         }
 
         static int[] CreateArray1D()
@@ -166,25 +189,30 @@ namespace Lab5
             }
         }
 
-        static int[] DeleteElements(int[] arr, out bool is1DCreated)
+        static int[] DeleteElements(int[] arr, ref bool is1DCreated)
         {
-            
-            Console.WriteLine("Введите номер числа, которое хотите удалить: ");
-            int index = EnterNumber(1,arr.Length) - 1;
-            Console.WriteLine($"Удалено число {arr[index]}");
-            int[] newArr = new int[arr.Length - 1];
-            int shiftRow = 0;
-            for (int i = 0; i < arr.Length; i++)
+            Console.WriteLine("Введите число, которое хотите удалить: ");
+            int index = Find(arr, out bool isFind);
+            if (isFind)
             {
-                if (i != index)
-                    newArr[i - shiftRow] = arr[i];
-                else
-                    shiftRow++;
+                int[] newArr = new int[arr.Length - 1];
+                int shiftRow = 0;
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    if (i != index)
+                        newArr[i - shiftRow] = arr[i];
+                    else
+                        shiftRow++;
+                }
+
+                is1DCreated = newArr.Length != 0;
+                Console.WriteLine("Число удалено");
+
+                return newArr;
             }
 
-            is1DCreated = newArr.Length != 0;
-
-            return newArr;
+            WriteError("Искомого числа нет в массиве");
+            return arr;
         }
 
         static int[,] AddRow(int[,] arr)
@@ -277,7 +305,7 @@ namespace Lab5
                                   "8 - Добавление строки в конец матрицы\n" +
                                   "9 - Удаление из рваного массива всех строк с нулями\n" +
                                   "10 - Выход");
-                switch (EnterNumber())
+                switch (EnterNumber(1,10))
                 {
                     case 1:
                         WriteDividerLine("Создание одномерного массива");
@@ -318,7 +346,7 @@ namespace Lab5
                     case 7:
                         WriteDividerLine("Удаление элемента");
                         if (is1DCreated)
-                            arr1D = DeleteElements(arr1D, out is1DCreated);
+                            arr1D = DeleteElements(arr1D, ref is1DCreated);
                         else
                             WriteError("Одномерный массив не создан");
                         break;
@@ -338,9 +366,6 @@ namespace Lab5
                         break;
                     case 10:
                         exit = true;
-                        break;
-                    default:
-                        Console.WriteLine("Введите число от 1 до 10");
                         break;
                 }
             }
