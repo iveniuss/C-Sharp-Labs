@@ -11,6 +11,18 @@ namespace ClassLibrary1
             Console.WriteLine(halfLine+name+halfLine);
             Console.ResetColor();
         }
+        public static String EnterString()
+        {
+            String str;
+            do
+            {
+                str = Console.ReadLine(); 
+                if(str=="") Console.WriteLine("Введите хоть что-нибудь");
+            } while (string.IsNullOrEmpty(str));
+
+            return str;
+
+        }
         public static void WriteError(string name)
         {
             Console.ForegroundColor = ConsoleColor.Red;

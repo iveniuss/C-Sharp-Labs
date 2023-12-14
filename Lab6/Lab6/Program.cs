@@ -14,18 +14,6 @@ namespace Lab6
             ".. Строка.... с. Лишними точками.....",
             "-Идетификаторы: id1, id2. id123;   _id78  1notid"
         };
-        static String EnterString()
-        {
-            String str;
-            do
-            {
-                str = Console.ReadLine(); 
-                if(str=="") Console.WriteLine("Введите хоть что-нибудь");
-            } while (string.IsNullOrEmpty(str));
-
-            return str;
-
-        }
         static string FormString(string str)
         {
             foreach (char divider in Dividers)
@@ -113,7 +101,7 @@ namespace Lab6
                 switch (Lib.EnterNumber(1, 3))
                 {
                     case 1:
-                        str = EnterString();
+                        str = Lib.EnterString();
                         return FormString(str);
                     case 2:
                         str =  ChooseString();
