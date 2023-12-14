@@ -1,40 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ClassLibrary1;
 
 namespace Lab6
 {
     internal class Program
     {
-        static readonly char[] Dividers = { ' ', ',', '.', ':',';','?','!'};
-        static int EnterNumber(int lowerBound = -2147483648, int upperBound = 2147483647)
-        {
-            int number;
-            bool isParse;
-            do
-            {
-                isParse = int.TryParse(Console.ReadLine(), out number);
-                if (!isParse) Console.WriteLine("Вы ввели не целое число");
-                if (number < lowerBound || number > upperBound)
-                    Console.WriteLine($"Число должно быть от {lowerBound} до {upperBound}");
-            }while (!isParse || number<lowerBound || number>upperBound);
+        private static readonly char[] Dividers = { ' ', ',', '.', ':',';','?','!'};
 
-            return number;
-        }
-        static void WriteDividerLine(string name = "")
-        {
-            string halfLine = new string('-',(54-name.Length)/2);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(halfLine+name+halfLine);
-            Console.ResetColor();
-        }
-
-        static void WriteError(string name)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(name);
-            Console.ResetColor();
-        }
+        private static readonly string[] TestStrings = {
+            "   Строка   с   лишними    проблемами   ",
+            ".. Строка.... с. Лишними точками.....",
+            "-Идетификаторы: id1, id2. id123;   _id78  1notid"
+        };
         static String EnterString()
         {
             String str;
@@ -47,7 +26,6 @@ namespace Lab6
             return str;
 
         }
-
         static string FormString(string str)
         {
             foreach (char divider in Dividers)
@@ -59,22 +37,17 @@ namespace Lab6
             str += '.';
             return str;
         }
-
         static string ChooseString()
         {
-            string[] testStrings = {"   Строка   с   лишними    проблемами   ",
-                ".. Строка.... с. Лишними точками.....",
-                "-Идетификаторы: id1, id2. id123;   _id78  1notid"
-            };
+            
             Console.WriteLine("Выберите одну из следующих строк");
-            for (int i = 1; i <= testStrings.Length; i++)
+            for (int i = 1; i <= TestStrings.Length; i++)
             {
-                Console.WriteLine($"{i} - {testStrings[i-1]}");
+                Console.WriteLine($"{i} - {TestStrings[i-1]}");
             }
 
-            return testStrings[EnterNumber(1, testStrings.Length) - 1];
+            return TestStrings[Lib.EnterNumber(1, TestStrings.Length) - 1];
         }
-
         static void LongestIds(string str)
         {
             string[] words = str.Split(Dividers, StringSplitOptions.RemoveEmptyEntries);
@@ -108,8 +81,7 @@ namespace Lab6
             ids = ids.Where(c => c != null).ToArray();
             PrintIds(ids);
         }
-
-        static void PrintIds(string[] strArr, string divider = "")
+        static void PrintIds(string[] strArr, string divider = ", ")
         {
             
             if (strArr.Length > 0)
@@ -120,7 +92,7 @@ namespace Lab6
                 {
                     for (int i = 1; i < strArr.Length; i++)
                     {
-                        Console.Write($", {strArr[i]}");
+                        Console.Write(divider+strArr[i]);
                     }
                 }
 
@@ -129,7 +101,6 @@ namespace Lab6
             else
                 Console.WriteLine("В строке нет идентификаторов");
         }
-
         static string AskCreateWay()
         {
             bool exit = false;
@@ -139,7 +110,7 @@ namespace Lab6
                               "2 - Из списка\n" +
                               "3 - Назад");
             while(!exit) 
-                switch (EnterNumber(1, 3))
+                switch (Lib.EnterNumber(1, 3))
                 {
                     case 1:
                         str = EnterString();
@@ -160,31 +131,31 @@ namespace Lab6
             bool exit = false;
             while (!exit)
             {
-                WriteDividerLine("Меню");
+                Lib.WriteDividerLine("Меню");
                 Console.WriteLine("Выберите действие:\n" +
                                   "1 - Создание строки\n" +
                                   "2 - Печать строки\n" +
                                   "3 - Вывести самые длинные идентификаторы\n" +
                                   "4 - Выход");
-                switch (EnterNumber(1,4))
+                switch (Lib.EnterNumber(1,4))
                 {
                     case 1:
-                        WriteDividerLine("Создание строки");
+                        Lib.WriteDividerLine("Создание строки");
                         str = AskCreateWay();
                         break;
                     case 2:
-                        WriteDividerLine("Печать массива");
+                        Lib.WriteDividerLine("Печать массива");
                         if (str!= "")
                             Console.WriteLine(str);
                         else
-                            WriteError("Строка еще не создана");
+                            Lib.WriteError("Строка еще не создана");
                         break;
                     case 3:
-                        WriteDividerLine("Идентификаторы");
+                        Lib.WriteDividerLine("Идентификаторы");
                         if (str!= "")
                             LongestIds(str);
                         else
-                            WriteError("Строка еще не создана");
+                            Lib.WriteError("Строка еще не создана");
                         break;
                     case 4:
                         exit = true;
