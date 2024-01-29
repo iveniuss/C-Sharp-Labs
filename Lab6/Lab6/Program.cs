@@ -10,7 +10,7 @@ namespace Lab6
         private static readonly char[] Dividers = { ' ', ',', '.', ':',';','?','!'};
 
         private static readonly string[] TestStrings = {
-            "   Строка   с   лишними    проблемами   ",
+            "   Строка   с   лишними    пробелами   ",
             ".. Строка.... с. Лишними точками.....",
             "-Идетификаторы: id1, id2. id123;   _id78  1notid"
         };
@@ -21,9 +21,10 @@ namespace Lab6
                 str = Regex.Replace(str, $"\\{divider}+", $"{divider}");
             }
 
-            str = str.Trim(Dividers);
-            str += '.';
+            str = str.TrimStart(Dividers);
+            str = str.TrimEnd(' ');
             return str;
+                
         }
         static string ChooseString()
         {
@@ -45,7 +46,7 @@ namespace Lab6
             
             foreach (string word in words)
             {
-                if (Regex.IsMatch(word,"^[a-zA-Z_][a-zA-Z0-9]+$"))
+                if (Regex.IsMatch(word,"^[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9]+$"))
                     if (word.Length == currentIdLen)
                     {
                         ids[currentIndex] = word;
@@ -132,7 +133,7 @@ namespace Lab6
                         str = AskCreateWay();
                         break;
                     case 2:
-                        Lib.WriteDividerLine("Печать массива");
+                        Lib.WriteDividerLine("Печать строки");
                         if (str!= "")
                             Console.WriteLine(str);
                         else

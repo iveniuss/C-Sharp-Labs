@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace ClassLibrary1
 {
@@ -6,14 +7,20 @@ namespace ClassLibrary1
     {
         public static void WriteDividerLine(string name = "")
         {
-            string halfLine = new string('-',(54-name.Length)/2);
+            int lineLength = 54;
+            if (name.Length < lineLength)
+                lineLength = lineLength - name.Length;
+            else
+                lineLength = 0;
+            string halfLine = new string('-',(lineLength)/2);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(halfLine+name+halfLine);
             Console.ResetColor();
         }
-        public static String EnterString()
+        public static string EnterString()
         {
             String str;
+            Console.WriteLine("Введите строку");
             do
             {
                 str = Console.ReadLine(); 
