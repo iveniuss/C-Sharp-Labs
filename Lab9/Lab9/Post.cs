@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Lab9
 {
@@ -8,32 +9,46 @@ namespace Lab9
 
         public static int ObjNum { get; private set; }
 
-        private int Views
+        public int Views
         {
-            set => _views = value < 0 ? 0 : value;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException();
+                else
+                    _views = value;
+            }
             get => _views;
         }
-        private int Comments
+        public int Comments
         {
             set
             {
                 if (value > _views)
+                {
                     _comments = _views;
-                else if (value < 0)
+                }
+                else if(value < 0)
+                {
                     _comments = 0;
+                }
                 else
                     _comments = value;
             }
             get => _comments;
         }
-        private int Reactions
+        public int Reactions
         {
             set
             {
                 if (value > _views)
+                {
                     _reactions = _views;
+                }
                 else if (value < 0)
+                {
                     _reactions = 0;
+                }
                 else
                     _reactions = value;
             }
@@ -91,6 +106,13 @@ namespace Lab9
         {
             return p1.Views != p2.Views || p1.Comments != p2.Comments || p1.Reactions != p2.Reactions;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Post p) return Views==p.Views && Comments==p.Comments && Reactions==p.Reactions;
+            return false;
+        }
+
 
         public double EngRate()
         {
