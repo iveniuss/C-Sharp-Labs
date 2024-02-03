@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Data.SqlTypes;
+using System.Runtime.Serialization.Formatters;
+using System.Security.Permissions;
+using System.Text;
 
 namespace Lab9
 {
@@ -27,36 +29,43 @@ namespace Lab9
             }
             set
             {
-                if(index >= 0 && index < posts.Length)
+                if (index >= 0 && index < posts.Length)
                     posts[index] = value;
                 else
                     throw new IndexOutOfRangeException();
             }
         }
-        public PostCollection() //Конструктор без параметров
+        public PostCollection()
         {
             posts = new Post[1];
-            posts[0] = new Post(0,0,0);
+            posts[0] = new Post(0, 0, 0);
             ColNum++;
         }
 
-        public PostCollection(int length, bool isKeyboard = false) //Конструктор рандомной генерации
+        public PostCollection(int length)
         {
             posts = new Post[length];
-            for(int i = 0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
-                if (isKeyboard)
-                    posts[i] = new Post(inputoutput.EnterIntNumber("Введите число просмотров"), inputoutput.EnterIntNumber("Введите число комментариев"), inputoutput.EnterIntNumber("Введите число реакций"));
-                else
-                    posts[i] = new Post(rnd.Next(1000), rnd.Next(1000), rnd.Next(1000));
+                posts[i] = new Post(rnd.Next(1000), rnd.Next(1000), rnd.Next(1000));
             }
 
             ColNum++;
         }
+
+        public PostCollection(Post[] posts)
+        {
+            this.posts = new Post[posts.Length];
+            for (int i = 0; i < posts.Length; i++)
+                this.posts[i] = new Post(posts[i]);
+            ColNum++;
+        }
+
+
         public PostCollection(PostCollection postCol)
         {
             posts = new Post[postCol.Length];
-            for(int i=0;  i < postCol.Length; i++)
+            for (int i = 0; i < postCol.Length; i++)
             {
                 posts[i] = new Post(postCol[i].Views, postCol[i].Comments, postCol[i].Reactions);
             }
@@ -65,10 +74,27 @@ namespace Lab9
 
         }
 
-        public void Show()
+        public override bool Equals(object obj)
         {
-            for(int i=0; i < Length; i++)
-                Console.WriteLine((Post)posts[i]+"\n");
+            if (obj is PostCollection postCol)
+            {
+                if (postCol.Length != this.Length)
+                    return false;
+                for (int i = 0; i < this.Length; i++)
+                    if (this[i] != postCol[i])
+                        return false;
+                return true;
+            }
+            return false;
+        }
+
+
+        public override string ToString()
+        {
+            string str = "";
+            for (int i = 0; i < Length; i++)
+                str += (Post)posts[i] + "\n";
+            return str;
         }
 
         public double EngRate()
@@ -81,6 +107,6 @@ namespace Lab9
 
             return rate / Length;
         }
-       
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 
 namespace Lab9
 {
@@ -14,7 +13,7 @@ namespace Lab9
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException();
+                    _views = 0;
                 else
                     _views = value;
             }
