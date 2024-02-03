@@ -8,60 +8,78 @@ namespace Lab9
 
         static Random rnd = new Random();
 
-        Post[] _posts;
+        private Post[] posts;
 
-        public int Lenght
+        public int Length
         {
-            get => _posts.Length;
+            get => posts.Length;
         }
+
+        public static int ColNum { get; private set; }
 
         public Post this[int index]
         {
             get
             {
-                if (index >= 0 && index < _posts.Length)
-                    return _posts[index];
+                if (index >= 0 && index < posts.Length)
+                    return posts[index];
                 throw new IndexOutOfRangeException();
             }
             set
             {
-                if(index >= 0 && index < _posts.Length)
-                    _posts[index] = value;
+                if(index >= 0 && index < posts.Length)
+                    posts[index] = value;
                 else
                     throw new IndexOutOfRangeException();
             }
         }
         public PostCollection() //Конструктор без параметров
         {
-            _posts = new Post[1];
-            _posts[0] = new Post(0,0,0);
+            posts = new Post[1];
+            posts[0] = new Post(0,0,0);
+            ColNum++;
         }
 
         public PostCollection(int length, bool isKeyboard = false) //Конструктор рандомной генерации
         {
-            _posts = new Post[length];
+            posts = new Post[length];
             for(int i = 0; i < length; i++)
             {
                 if (isKeyboard)
-                    _posts[i] = new Post(inputoutput.EnterIntNumber("Введите число просмотров"), inputoutput.EnterIntNumber("Введите число комментариев"), inputoutput.EnterIntNumber("Введите число реакций"));
+                    posts[i] = new Post(inputoutput.EnterIntNumber("Введите число просмотров"), inputoutput.EnterIntNumber("Введите число комментариев"), inputoutput.EnterIntNumber("Введите число реакций"));
                 else
-                    _posts[i] = new Post(rnd.Next(1000), rnd.Next(1000), rnd.Next(1000));
+                    posts[i] = new Post(rnd.Next(1000), rnd.Next(1000), rnd.Next(1000));
             }
+
+            ColNum++;
         }
         public PostCollection(PostCollection postCol)
         {
-            _posts = new Post[postCol.Lenght];
-            for(int i=0;  i < postCol.Lenght; i++)
+            posts = new Post[postCol.Length];
+            for(int i=0;  i < postCol.Length; i++)
             {
-                _posts[i] = new Post(postCol[i].Views, postCol[i].Comments, postCol[i].Reactions);
+                posts[i] = new Post(postCol[i].Views, postCol[i].Comments, postCol[i].Reactions);
             }
-            
+
+            ColNum++;
+
         }
 
         public void Show()
         {
-            for(int i=0; i < Lenght; i++)
-                Console.WriteLine((Post)_posts[i]+"\n");
+            for(int i=0; i < Length; i++)
+                Console.WriteLine((Post)posts[i]+"\n");
+        }
+
+        public double EngRate()
+        {
+            double rate = 0;
+            for (int i = 0; i < Length; i++)
+            {
+                rate += (double)posts[i];
+            }
+
+            return rate / Length;
         }
        
     }
