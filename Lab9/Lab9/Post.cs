@@ -74,7 +74,7 @@ namespace Lab9
         {
             Views = post.Views;
             Comments = post.Comments;
-            Reactions = post._reactions;
+            Reactions = post.Reactions;
             ObjNum++;
 
         }

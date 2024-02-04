@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization.Formatters;
-using System.Security.Permissions;
-using System.Text;
 
 namespace Lab9
 {
@@ -31,8 +28,6 @@ namespace Lab9
             {
                 if (index >= 0 && index < posts.Length)
                     posts[index] = value;
-                else
-                    throw new IndexOutOfRangeException();
             }
         }
         public PostCollection()
@@ -47,7 +42,10 @@ namespace Lab9
             posts = new Post[length];
             for (int i = 0; i < length; i++)
             {
-                posts[i] = new Post(rnd.Next(1000), rnd.Next(1000), rnd.Next(1000));
+                int views = rnd.Next(1000);
+                int comments = rnd.Next(views);
+                int reactions = rnd.Next(views);
+                posts[i] = new Post(views, comments, reactions);
             }
 
             ColNum++;
@@ -57,7 +55,7 @@ namespace Lab9
         {
             this.posts = new Post[posts.Length];
             for (int i = 0; i < posts.Length; i++)
-                this.posts[i] = new Post(posts[i]);
+                this.posts[i] = posts[i];
             ColNum++;
         }
 
@@ -93,7 +91,11 @@ namespace Lab9
         {
             string str = "";
             for (int i = 0; i < Length; i++)
-                str += (Post)posts[i] + "\n";
+            {
+                str += (Post)posts[i];
+                if (i < Length - 1)
+                    str += "\n";
+            }
             return str;
         }
 
@@ -105,7 +107,7 @@ namespace Lab9
                 rate += (double)posts[i];
             }
 
-            return rate / Length;
+            return Math.Round(rate / Length,2);
         }
 
     }

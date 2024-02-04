@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab9
 {
-    internal class inputoutput
+    internal class IO
     {
         public static int EnterIntNumber(string message = "Введите целое число", int lowerBound = int.MinValue, int upperBound = int.MaxValue)
         {
