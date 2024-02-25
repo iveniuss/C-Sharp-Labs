@@ -9,8 +9,7 @@ namespace Lab10
     {
         static Random random = new Random();
         static void Main(string[] args)
-        { 
-            //-----------------------------------------------------------
+        {
             bool finish = false;
             int part = 0;
             Plant[] plants = new Plant[20];

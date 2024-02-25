@@ -105,7 +105,7 @@ namespace ClassLibLab10
         }
         public override string ToString()
         {
-            return $"Название: {Name}, Цвет: {Color}, id:{Id.Number}";
+            return $"Название: {Name}, Цвет: {Color}, id: {Id.Number}";
         }
 
         public virtual void Init()
@@ -155,6 +155,8 @@ namespace ClassLibLab10
             foreach (Plant plant in plants)
                 if (plant is Flower flower && flower.Smell == smell)
                     flowers += flower.Name + "\n";
+            if (flowers == "")
+                return "В списке нет цветов с такми запахом";
             return flowers.Remove(flowers.Length - 1);
         }
 

@@ -6,6 +6,17 @@ namespace Lab10Tests
     public class ClassPlant
     {
         [TestMethod]
+        public void ToStringTest()
+        {
+            string expectedString = "Название: Роза, Цвет: Красный, id: 0";
+            Plant plant = new Plant("Роза", "Красный");
+
+            string str = plant.ToString();
+
+            Assert.AreEqual(expectedString, str);
+        }
+
+        [TestMethod]
         public void NameNullTest()
         {
             string expectedName = "";
@@ -66,26 +77,89 @@ namespace Lab10Tests
         }
 
         [TestMethod]
-        public void FlowersBySmellTest()
+        public void FlowersBySmellTest() //Если цветы есть в списке
         {
-            string smell = "Сладкий";
-            Plant[] plants = new Plant[] { new Plant("Картофель", "Желтый"),
+            string existingSmell = "Сладкий";
+            Plant[] plants = [ new Plant("Картофель", "Желтый"),
                                            new Tree("Дуб", "Коричневый", 60),
                                            new Flower("Ромашка", "Белый", "Сладкий"),
                                            new Rose("Роза", "Красный", "Терпкий", true),
-                                           new Rose("Роза", "Белый", "Сладкий", false) };
+                                           new Rose("Роза", "Белый", "Сладкий", false) ];
             string expectedFlowers = "Ромашка\nРоза";
 
-            string flowers = Plant.FlowersBySmell(plants,smell);
+            string flowers1 = Plant.FlowersBySmell(plants,existingSmell);
+            
 
-            Assert.AreEqual(expectedFlowers, flowers);
+            Assert.AreEqual(expectedFlowers, flowers1);
 
+        }
+        [TestMethod]
+        public void FlowersBySmellTest2() //Если цветов нет в списке
+        {
+            string notExistingSmell = "Кислый";
+            Plant[] plants = [ new Plant("Картофель", "Желтый"),
+                                           new Tree("Дуб", "Коричневый", 60),
+                                           new Flower("Ромашка", "Белый", "Сладкий"),
+                                           new Rose("Роза", "Красный", "Терпкий", true),
+                                           new Rose("Роза", "Белый", "Сладкий", false) ];
+            string error = "В списке нет цветов с такми запахом";
+            string flowers2 = Plant.FlowersBySmell(plants, notExistingSmell);
+
+            Assert.AreEqual(error, flowers2);
+
+
+
+        }
+
+        [TestMethod]
+        public void CompareToTest()
+        {
+            Plant p1 = new Plant("A", "");
+            Plant p2 = new Plant("Б", "");
+            int expectedComp = 1;
+
+            int comp = p1.CompareTo(p2);
+
+            Assert.AreEqual(expectedComp, comp);
+        }
+
+        [TestMethod]
+        public void CloneTest()
+        {
+            Plant p1 = new Plant();
+            p1.RandomInit();
+
+            Plant p2 = ( Plant )p1.Clone();
+
+            Assert.AreEqual(p1, p2);
+        }
+
+        [TestMethod]
+        public void ShallowCopyTest()
+        {
+            Plant p1 = new Plant();
+            p1.RandomInit();
+
+            Plant p2 = p1.ShallowCopy();
+
+            Assert.AreEqual(p1, p2);
         }
     }
 
     [TestClass]
     public class ClassRose
     {
+        [TestMethod]
+        public void ToStringTest()
+        {
+            string expectedString = "Название розы: Роза, Цвет розы: Красный, Запах: Сладкий, Шипы: Да";
+            Rose rose = new Rose("Роза", "Красный", "Сладкий", true);
+
+            string str = rose.ToString();
+
+            Assert.AreEqual(expectedString, str);
+        }
+
         [TestMethod]
         public void SmellNullTest()
         {
@@ -137,10 +211,79 @@ namespace Lab10Tests
 
             Assert.AreEqual(r1, r2);
         }
+
+        [TestMethod]
+        public void CloneTest()
+        {
+            Rose p1 = new Rose();
+            p1.RandomInit();
+
+            Rose p2 = (Rose)p1.Clone();
+
+            Assert.AreEqual(p1, p2);
+        }
+
+        [TestMethod]
+        public void ShallowCopyTest()
+        {
+            Rose p1 = new Rose();
+            p1.RandomInit();
+
+            Rose p2 = p1.ShallowCopy();
+
+            Assert.AreEqual(p1, p2);
+        }
+    }
+
+    [TestClass]
+    public class ClassFlower
+    {
+        [TestMethod]
+        public void ToStringTest()
+        {
+            string expectedString = "Название цветка: Роза, Цвет: Красный, Запах: Сладкий";
+            Flower flower = new Flower("Роза", "Красный", "Сладкий");
+
+            string str = flower.ToString();
+
+            Assert.AreEqual(expectedString, str);
+        }
+
+        [TestMethod]
+        public void CloneTest()
+        {
+            Flower p1 = new Flower();
+            p1.RandomInit();
+
+            Flower p2 = (Flower)p1.Clone();
+
+            Assert.AreEqual(p1, p2);
+        }
+
+        [TestMethod]
+        public void ShallowCopyTest()
+        {
+            Flower p1 = new Flower();
+            p1.RandomInit();
+
+            Flower p2 = p1.ShallowCopy();
+
+            Assert.AreEqual(p1, p2);
+        }
     }
     [TestClass]
     public class ClassTree
     {
+        [TestMethod]
+        public void ToStringTest()
+        {
+            string expectedString = "Название дерева: Дуб, Цвет: Зеленый, Высота: 50";
+            Tree tree = new Tree("Дуб", "Зеленый", 50);
+
+            string str = tree.ToString();
+
+            Assert.AreEqual(expectedString, str);
+        }
         [TestMethod]
         public void PropertyHeight()
         {
@@ -193,6 +336,27 @@ namespace Lab10Tests
             Tree t2 = new Tree(t1);
 
             Assert.AreEqual(t1, t2);
+        }
+        [TestMethod]
+        public void CloneTest()
+        {
+            Tree p1 = new Tree();
+            p1.RandomInit();
+
+            Tree p2 = (Tree)p1.Clone();
+
+            Assert.AreEqual(p1, p2);
+        }
+
+        [TestMethod]
+        public void ShallowCopyTest()
+        {
+            Tree p1 = new Tree();
+            p1.RandomInit();
+
+            Tree p2 = p1.ShallowCopy();
+
+            Assert.AreEqual(p1, p2);
         }
     }
 }

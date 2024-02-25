@@ -36,12 +36,12 @@ namespace ClassLibLab10
 
         public new void Show()
         {
-            IO.Write($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(isSpiked ? "Да" : "Нет")}");
+            IO.Write($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(IsSpiked ? "Да" : "Нет")}");
         }
 
         public override string ToString()
         {
-            return ($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(isSpiked ? "Да" : "Нет")}");
+            return $"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(IsSpiked ? "Да" : "Нет")}";
         }
 
         public override void Init()
