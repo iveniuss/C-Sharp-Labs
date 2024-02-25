@@ -3,8 +3,100 @@ using ClassLibLab10;
 namespace Lab10Tests
 {
     [TestClass]
+    public class ClassPlant
+    {
+        [TestMethod]
+        public void NameNullTest()
+        {
+            string expectedName = "";
+            Plant plant = new Plant();
+
+            plant.Name = null;
+
+            Assert.AreEqual(expectedName, plant.Name);
+        }
+
+        [TestMethod]
+        public void ColorNullTest()
+        {
+            string expectedColor = "";
+            Plant plant = new Plant();
+
+            plant.Color = null;
+
+            Assert.AreEqual(expectedColor, plant.Color);
+        }
+        [TestMethod]
+        public void RosesWithoutSpikesTest()
+        {
+            Plant[] plants = new Plant[] { new Plant("Картофель", "Желтый"),
+                                           new Tree("Дуб", "Коричневый", 60),
+                                           new Flower("Ромашка", "Белый", "Сладкий"),
+                                           new Rose("Роза", "Красный", "Терпкий", true),
+                                           new Rose("Роза", "Белый", "Сладкий", false) };
+            string expectedroses = "Название розы: Роза, Цвет: Белый, Запах: Сладкий";
+
+            string roses = Plant.RosesWithoutSpikes(plants);
+
+            Assert.AreEqual(expectedroses, roses);
+        }
+        [TestMethod]
+        public void SmallestTreeTest1() //Если дерево есть в списке
+        {
+            Tree expectedTree = new Tree("Дуб", "Коричневый", 35);
+            Plant[] plants = new Plant[] { new Plant("Картофель", "Желтый"),
+                                           expectedTree,
+                                           new Flower("Ромашка", "Белый", "Сладкий"),
+                                           new Rose("Роза", "Красный", "Терпкий", true),
+                                           new Tree("Ель", "Зеленый", 50) };
+
+            Tree tree = Plant.SmallestTree(plants);
+
+            Assert.AreEqual(expectedTree, tree);
+        }
+
+        [TestMethod]
+        public void SmallestTreeTest2() //Если дерева нет в списке
+        {
+            Plant[] plants = new Plant[] { new Plant("Картофель", "Желтый"),
+                                           new Flower("Ромашка", "Белый", "Сладкий"),
+                                           new Rose("Роза", "Красный", "Терпкий", true) };
+
+            Assert.ThrowsException<ArgumentException>(() => Plant.SmallestTree(plants));
+        }
+
+        [TestMethod]
+        public void FlowersBySmellTest()
+        {
+            string smell = "Сладкий";
+            Plant[] plants = new Plant[] { new Plant("Картофель", "Желтый"),
+                                           new Tree("Дуб", "Коричневый", 60),
+                                           new Flower("Ромашка", "Белый", "Сладкий"),
+                                           new Rose("Роза", "Красный", "Терпкий", true),
+                                           new Rose("Роза", "Белый", "Сладкий", false) };
+            string expectedFlowers = "Ромашка\nРоза";
+
+            string flowers = Plant.FlowersBySmell(plants,smell);
+
+            Assert.AreEqual(expectedFlowers, flowers);
+
+        }
+    }
+
+    [TestClass]
     public class ClassRose
     {
+        [TestMethod]
+        public void SmellNullTest()
+        {
+            string expectedSmell = "";
+            Rose rose = new Rose();
+
+            rose.Smell = null;
+
+            Assert.AreEqual(expectedSmell, rose.Smell);
+        }
+
         [TestMethod]
         public void Constructor1() //Пустой конструктор
         {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace ClassLibLab10
 {
@@ -26,7 +22,7 @@ namespace ClassLibLab10
 
         public static string EnterString(string message = "Введите строку")
         {
-            String str;
+            string? str;
             Console.WriteLine(message);
             do
             {
@@ -42,21 +38,23 @@ namespace ClassLibLab10
         {
             bool isParse;
             bool value;
+            string? str;
             do
             {
                 Console.WriteLine(message + "(Y/N)");
-                if (Console.ReadLine() == "Y")
+                str = Console.ReadLine();
+                if (str == "Y")
                 {
                     isParse = true;
                     value = true;
                 }
-                else if (Console.ReadLine() == "N")
+                else if (str == "N")
                 {
                     isParse = true;
                     value = false;
                 }
                 else
-                    isParse = bool.TryParse(Console.ReadLine(), out value);
+                    isParse = bool.TryParse(str, out value);
             } while (!isParse);
             return value;
         }

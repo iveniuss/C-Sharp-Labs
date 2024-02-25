@@ -2,13 +2,13 @@
 
 namespace ClassLibLab10
 {
-    public class Tree : Plant
+    public class Tree : Plant, IInit, ICloneable
     {
-        static Random rnd = new Random();
 
         string[] treeNameExamples = { "Дуб", "Береза", "Ель", "Пихта", "Баобаб", "Секвоя","Тополь","Клен"};
 
         protected int height;
+        public static int TreeNum { get; protected set; }
 
         public int Height
         {
@@ -26,25 +26,31 @@ namespace ClassLibLab10
 
         public Tree() : base()
         {
+            TreeNum++;
+            PlantNum--;
             height = 0;
         }
 
         public Tree(string name, string color, int height):base(name, color)
         {
+            TreeNum++;
+            PlantNum--;
             Height = height;
         }
         public Tree(Tree tree) : base(tree)
         {
-            Height= tree.Height;
+            TreeNum++;
+            PlantNum--;
+            Height = tree.Height;
         }
 
         public new void Show()
         {
             IO.Write($"Название дерева: {Name}, Цвет: {Color}, Высота: {Height}");
         }
-        public override void VirtualShow()
+        public override string ToString()
         {
-            IO.Write($"Название дерева: {Name}, Цвет: {Color}, Высота: {Height}");
+            return ($"Название дерева: {Name}, Цвет: {Color}, Высота: {Height}");
         }
 
         public override void Init()
@@ -65,5 +71,15 @@ namespace ClassLibLab10
                 return Name == tree.Name && Color == tree.Color && Height == tree.Height;
             return false;
         }
+        public override object Clone()
+        {
+            return new Tree(this);
+        }
+        public override Tree ShallowCopy()
+        {
+            return (Tree)MemberwiseClone();
+        }
     }
+
+    
 }

@@ -1,42 +1,47 @@
 ﻿
 
+
+using System;
+
 namespace ClassLibLab10
 {
-    public class Rose:Flower
+    public class Rose:Flower, IInit, ICloneable
     {
-        Random rnd = new Random();
 
         protected bool isSpiked;
+        public static int RoseNum { get; protected set; }
 
-        public bool IsSpiked
-        {
-            get => isSpiked;
-            set => isSpiked = value;
-        }
+        public bool IsSpiked {get; set;}
 
         public Rose() : base()
         {
+            RoseNum++;
+            FlowerNum--;
             IsSpiked = false;
         }
 
         public Rose(string name,string color,string smell,bool isSpiked) : base(name, color, smell)
         {
+            RoseNum++;
+            FlowerNum--;
             IsSpiked = isSpiked;
         }
 
         public Rose(Rose rose) : base(rose)
         {
+            RoseNum++;
+            FlowerNum--;
             IsSpiked = rose.IsSpiked;
         }
 
         public new void Show()
         {
-            IO.Write($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {isSpiked}");
+            IO.Write($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(isSpiked ? "Да" : "Нет")}");
         }
 
-        public override void VirtualShow()
+        public override string ToString()
         {
-            IO.Write($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {isSpiked}");
+            return ($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(isSpiked ? "Да" : "Нет")}");
         }
 
         public override void Init()
@@ -58,6 +63,16 @@ namespace ClassLibLab10
                 return Name == rose.Name && Color == rose.Color && Smell == rose.Smell && IsSpiked==rose.IsSpiked;
             return false;
         }
+        public override object Clone()
+        {
+            return new Rose(this);
+        }
+
+        public override Rose ShallowCopy()
+        {
+            return (Rose)MemberwiseClone();
+        }
+
     }
 
 }
