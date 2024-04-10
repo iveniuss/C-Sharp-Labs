@@ -1,13 +1,18 @@
 ﻿
 namespace ClassLibLab10
 {
-    public class Flower : Plant, IInit, ICloneable
+    public class Flower : Plant, IInit, ICloneable, IGetBase
     {
         string[] flowerNameExamples = { "Роза", "Ромашка", "Орхидея", "Лилия", "Гвоздика", "Сирень", "Лилия" };
         string[] smellExamples = { "Сладкий", "Терпкий", "Душистый", "Пряный" };
 
         protected string? smell;
         public static int FlowerNum { get; protected set; }
+
+        public Plant GetBase()
+        {
+            return new Plant(this);
+        }
 
         public string? Smell
         {

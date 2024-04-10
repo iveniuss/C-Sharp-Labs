@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace ClassLibLab10
 {
@@ -105,27 +104,28 @@ namespace ClassLibLab10
         }
         public override string ToString()
         {
-            return $"Название: {Name}, Цвет: {Color}, id: {Id.Number}";
+            return $"Название: {Name}, Цвет: {Color}";
         }
 
         public virtual void Init()
         {
             Name = IO.EnterString("Введите название растения");
             Color = IO.EnterString("Введите цвет растения");
-            Id.Number = IO.EnterIntNumber("Введите id");
+            Id.Number = 0;
         }
 
         public virtual void RandomInit()
         {
             Name = nameExamples[rnd.Next(nameExamples.Length)];
             Color = colorExamples[rnd.Next(colorExamples.Length)];
-            Id.Number = rnd.Next(1000);
+            Id.Number = 0;
         }
 
         public override bool Equals(object? obj)
         {
             if (obj != null && obj is Plant plant)
-                return Name == plant.Name && Color == plant.Color;
+                return Name == plant.Name 
+                    && Color == plant.Color;
             return false;
         }
 
@@ -164,7 +164,7 @@ namespace ClassLibLab10
         {
             if (obj == null) return -1;
             else if (obj is Plant plant)
-                return string.Compare(Name, plant.Name);
+                return string.Compare(Name + Color, plant.Name + plant.Color);
             return -1;
         }
 
@@ -177,10 +177,5 @@ namespace ClassLibLab10
         {
             return (Plant)MemberwiseClone();
         }
-
-
-
-
-
     }
 }

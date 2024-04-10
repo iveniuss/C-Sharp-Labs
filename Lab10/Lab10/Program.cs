@@ -1,7 +1,5 @@
 ﻿using ClassLibLab10;
 using ClassLibLab9;
-using System.Collections.Immutable;
-using System.Linq.Expressions;
 
 namespace Lab10
 {
@@ -256,7 +254,7 @@ namespace Lab10
                                 p1.Id.Number = 1;
                                 Console.WriteLine("p1 - оригинальный объект");
                                 Console.WriteLine(p1);
-                                Console.WriteLine("p2 - Поверхностная копия, p2 - глубокая копия");
+                                Console.WriteLine("p2 - Поверхностная копия, p3 - глубокая копия");
                                 Console.WriteLine("Увеличим id p2 на 1, а id p3 на 10");
                                 Plant p2 = p1.ShallowCopy();
                                 Plant p3 = (Plant)p1.Clone();

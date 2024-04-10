@@ -1,18 +1,17 @@
-﻿
-
-
-using System;
-
-namespace ClassLibLab10
+﻿namespace ClassLibLab10
 {
-    public class Rose:Flower, IInit, ICloneable
+    public class Rose : Flower, IInit, ICloneable, IGetBase
     {
 
         protected bool isSpiked;
         public static int RoseNum { get; protected set; }
 
-        public bool IsSpiked {get; set;}
+        public bool IsSpiked { get; set; }
 
+        new public Plant GetBase()
+        {
+            return new Plant(this);
+        }
         public Rose() : base()
         {
             RoseNum++;
@@ -20,7 +19,7 @@ namespace ClassLibLab10
             IsSpiked = false;
         }
 
-        public Rose(string name,string color,string smell,bool isSpiked) : base(name, color, smell)
+        public Rose(string name, string color, string smell, bool isSpiked) : base(name, color, smell)
         {
             RoseNum++;
             FlowerNum--;
@@ -48,7 +47,7 @@ namespace ClassLibLab10
         {
             base.Init();
             isSpiked = IO.EnterBool("Есть ли шипы");
-            
+
         }
         public override void RandomInit()
         {
@@ -60,7 +59,7 @@ namespace ClassLibLab10
         public override bool Equals(object? obj)
         {
             if (obj != null && obj is Rose rose)
-                return Name == rose.Name && Color == rose.Color && Smell == rose.Smell && IsSpiked==rose.IsSpiked;
+                return Name == rose.Name && Color == rose.Color && Smell == rose.Smell && IsSpiked == rose.IsSpiked;
             return false;
         }
         public override object Clone()

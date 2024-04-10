@@ -2,13 +2,18 @@
 
 namespace ClassLibLab10
 {
-    public class Tree : Plant, IInit, ICloneable
+    public class Tree : Plant, IInit, ICloneable, IGetBase
     {
 
         string[] treeNameExamples = { "Дуб", "Береза", "Ель", "Пихта", "Баобаб", "Секвоя","Тополь","Клен"};
 
         protected int height;
         public static int TreeNum { get; protected set; }
+
+        public Plant GetBase()
+        {
+            return new Plant(this);
+        }
 
         public int Height
         {
