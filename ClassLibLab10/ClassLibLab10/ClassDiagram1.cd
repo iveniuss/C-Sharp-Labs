@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ClassLibLab10.Flower">
+    <Position X="15.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAACAAAAEgAAAAABAAAAEQIQAAAACABAAABA=</HashCode>
+      <FileName>Flower.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ClassLibLab10.Plant">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAGAAAAAACEAAQEgAAAAAQAAAAEAACAACADoBAAABA=</HashCode>
+      <FileName>Plant.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ClassLibLab10.Rose">
+    <Position X="17.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACBAAAEgQAAAAAgAAAEAAAAAAACABAAABA=</HashCode>
+      <FileName>Rose.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ClassLibLab10.ByColor">
+    <Position X="11.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>SortByColor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ClassLibLab10.Tree">
+    <Position X="11.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABACAAAQEgAAAAAAAAAAEAAAAAADCABAAABA=</HashCode>
+      <FileName>Tree.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="ClassLibLab10.IInit">
+    <Position X="15.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>IInit.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

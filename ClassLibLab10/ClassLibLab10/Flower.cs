@@ -83,5 +83,10 @@ namespace ClassLibLab10
         {
             return (Flower)MemberwiseClone();
         }
+        public override int GetHashCode()
+        {
+            string str = Name + Color+Smell;
+            return str.GetHashCode();
+        }
     }
 }

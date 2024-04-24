@@ -72,7 +72,7 @@ namespace ClassLibLab10
 
         public override bool Equals(object? obj)
         {
-            if(obj != null && obj is Tree tree)
+            if (obj != null && obj is Tree tree)
                 return Name == tree.Name && Color == tree.Color && Height == tree.Height;
             return false;
         }
@@ -83,6 +83,12 @@ namespace ClassLibLab10
         public override Tree ShallowCopy()
         {
             return (Tree)MemberwiseClone();
+        }
+
+        public override int GetHashCode()
+        {
+            string str = Name + Color+Height.ToString();
+            return str.GetHashCode();
         }
     }
 

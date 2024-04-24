@@ -71,6 +71,11 @@
         {
             return (Rose)MemberwiseClone();
         }
+        public override int GetHashCode()
+        {
+            string str = Name + Color+Smell+isSpiked.ToString();
+            return str.GetHashCode();
+        }
 
     }
 

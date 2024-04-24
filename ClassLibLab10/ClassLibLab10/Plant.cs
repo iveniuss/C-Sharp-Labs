@@ -177,5 +177,11 @@ namespace ClassLibLab10
         {
             return (Plant)MemberwiseClone();
         }
+
+        public override int GetHashCode()
+        {
+            string str = Name + Color;
+            return str.GetHashCode();
+        }
     }
 }
