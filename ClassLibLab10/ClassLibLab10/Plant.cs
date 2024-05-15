@@ -183,5 +183,36 @@ namespace ClassLibLab10
             string str = Name + Color;
             return str.GetHashCode();
         }
+        public static Plant[] RandomPlants(int num)
+        {
+            Plant[] plants = new Plant[num];
+            for (int i = 0; i < num; i++)
+            {
+                switch (rnd.Next(4))
+                {
+                    case 0:
+                        Plant p = new Plant();
+                        p.RandomInit();
+                        plants[i] = p;
+                        break;
+                    case 1:
+                        Tree t = new Tree();
+                        t.RandomInit();
+                        plants[i] = t;
+                        break;
+                    case 2:
+                        Flower f = new Flower();
+                        f.RandomInit();
+                        plants[i] = f;
+                        break;
+                    case 3:
+                        Rose r = new Rose();
+                        r.RandomInit();
+                        plants[i] = r;
+                        break;
+                }
+            }
+            return plants;
+        }
     }
 }
