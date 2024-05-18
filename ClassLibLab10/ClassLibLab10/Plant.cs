@@ -100,7 +100,7 @@ namespace ClassLibLab10
 
         public void Show()
         {
-            IO.Write($"Название: {Name} Цвет: {Color}");
+            IO.WriteLine($"Название: {Name} Цвет: {Color}");
         }
         public override string ToString()
         {

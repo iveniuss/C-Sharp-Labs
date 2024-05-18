@@ -49,7 +49,7 @@ namespace ClassLibLab10
 
         public new void Show()
         {
-            IO.Write($"Название цветка: {Name}, Цвет: {Color}, Запах: {Smell}");
+            IO.WriteLine($"Название цветка: {Name}, Цвет: {Color}, Запах: {Smell}");
         }
 
         public override string ToString()

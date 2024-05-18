@@ -35,7 +35,7 @@
 
         public new void Show()
         {
-            IO.Write($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(IsSpiked ? "Да" : "Нет")}");
+            IO.WriteLine($"Название розы: {Name}, Цвет розы: {Color}, Запах: {Smell}, Шипы: {(IsSpiked ? "Да" : "Нет")}");
         }
 
         public override string ToString()

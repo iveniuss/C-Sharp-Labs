@@ -78,7 +78,7 @@ namespace ClassLibLab10
             Console.ResetColor();
         }
 
-        public static void Write(string name, ConsoleColor color = ConsoleColor.Gray)
+        public static void WriteLine(string name, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(name);

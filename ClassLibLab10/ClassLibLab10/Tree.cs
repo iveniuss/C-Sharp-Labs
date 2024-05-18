@@ -51,7 +51,7 @@ namespace ClassLibLab10
 
         public new void Show()
         {
-            IO.Write($"Название дерева: {Name}, Цвет: {Color}, Высота: {Height}");
+            IO.WriteLine($"Название дерева: {Name}, Цвет: {Color}, Высота: {Height}");
         }
         public override string ToString()
         {
