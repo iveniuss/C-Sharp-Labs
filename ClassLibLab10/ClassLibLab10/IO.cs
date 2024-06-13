@@ -67,7 +67,7 @@ namespace ClassLibLab10
                 lineLength = 0;
             string halfLine = new string('-', (lineLength) / 2);
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(halfLine + name + halfLine);
+            Console.WriteLine(halfLine + (lineLength % 2 == 0 ? "" : "-") + name + halfLine);
             Console.ResetColor();
         }
 
