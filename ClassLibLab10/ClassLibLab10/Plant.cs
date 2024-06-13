@@ -183,12 +183,13 @@ namespace ClassLibLab10
             string str = Name + Color;
             return str.GetHashCode();
         }
-        public static Plant[] RandomPlants(int num)
+        public static Plant[] RandomPlants(int num, bool getBase = true, bool randomTypes = true)
         {
             Plant[] plants = new Plant[num];
             for (int i = 0; i < num; i++)
             {
-                switch (rnd.Next(4))
+                switch (randomTypes ? rnd.Next(getBase ? 0 : 1,4)
+                                    : getBase ? i%4 : i%3+1)
                 {
                     case 0:
                         Plant p = new Plant();
@@ -213,6 +214,37 @@ namespace ClassLibLab10
                 }
             }
             return plants;
+        }
+
+        public static Plant GetPlant(bool getBase = true)
+        {
+            Console.WriteLine("Выберите тип растения");
+            Console.WriteLine("1 - Plant");
+            Console.WriteLine("2 - Tree");
+            Console.WriteLine("3 - Flower");
+            Console.WriteLine("4 - Rose");
+            while (true)
+            {
+                switch (IO.EnterIntNumber(lowerBound: (getBase ? 1 : 2), upperBound: 4))
+                {
+                    case 1:
+                        Plant p = new();
+                        p.Init();
+                        return p;
+                    case 2:
+                        Tree t = new();
+                        t.Init();
+                        return t;
+                    case 3:
+                        Flower f = new();
+                        f.Init();
+                        return f;
+                    case 4:
+                        Rose r = new();
+                        r.Init();
+                        return r;
+                }
+            }
         }
     }
 }
