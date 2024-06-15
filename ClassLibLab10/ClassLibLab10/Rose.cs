@@ -2,8 +2,6 @@
 {
     public class Rose : Flower, IInit, ICloneable, IGetBase
     {
-
-        protected bool isSpiked;
         public static int RoseNum { get; protected set; }
 
         public bool IsSpiked { get; set; }
@@ -46,14 +44,14 @@
         public override void Init()
         {
             base.Init();
-            isSpiked = IO.EnterBool("Есть ли шипы");
+            IsSpiked = IO.EnterBool("Есть ли шипы");
 
         }
         public override void RandomInit()
         {
             base.RandomInit();
             Name = "Роза";
-            isSpiked = rnd.Next(2) == 1;
+            IsSpiked = rnd.Next(2) == 1;
         }
 
         public override bool Equals(object? obj)
@@ -73,7 +71,7 @@
         }
         public override int GetHashCode()
         {
-            string str = Name + Color+Smell+isSpiked.ToString();
+            string str = Name + Color+Smell+IsSpiked.ToString();
             return str.GetHashCode();
         }
 
